@@ -1,13 +1,23 @@
 const SHEET_CSV_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vR2yrRpyHGbd4fOoEaW995KltoXHLpozI9UKNKt2dITY131GAbNqg2CWAcjJ9Nt52u2j4847eOYie_J/pub?gid=271143107&single=true&output=csv";
 
+const WHATSAPP_NUMBER = "966556104669";
+
 const propertiesContainer = document.getElementById("propertiesContainer");
 const loadingMessage = document.getElementById("loadingMessage");
 const errorMessage = document.getElementById("errorMessage");
 const searchInput = document.getElementById("searchInput");
 const categoryFilter = document.getElementById("categoryFilter");
+const menuToggle = document.getElementById("menuToggle");
+const mobileMenu = document.getElementById("mobileMenu");
 
 let allProperties = [];
+
+if (menuToggle && mobileMenu) {
+  menuToggle.addEventListener("click", () => {
+    mobileMenu.classList.toggle("show");
+  });
+}
 
 async function loadProperties() {
   try {
@@ -35,7 +45,7 @@ async function loadProperties() {
 
 function parseCSV(csvText) {
   const lines = csvText.trim().split("\n");
-  const headers = lines[0].split(",").map((header) => header.trim());
+  const headers = splitCSVLine(lines[0]).map((header) => header.trim());
 
   return lines.slice(1).map((line) => {
     const values = splitCSVLine(line);
@@ -100,7 +110,7 @@ function isVisible(property) {
 }
 
 function formatPrice(property) {
-  if (property.price_type === "sum") {
+  if (property.price_type.toLowerCase() === "sum") {
     return "السوم";
   }
 
@@ -114,34 +124,70 @@ function formatPrice(property) {
 
 function getImageUrl(imageUrl) {
   if (!imageUrl) {
-    return "https://picsum.photos/600/400?random=20";
+    return "https://picsum.photos/900/700?random=40";
   }
   return imageUrl;
+}
+
+function getWhatsAppMessage(property) {
+  return encodeURIComponent(
+    `مرحبًا، لدي اهتمام بهذا العقار:\n${property.title}\nالمدينة: ${property.city}\nالحي: ${property.district}\nالسعر: ${formatPrice(property)}`
+  );
 }
 
 function createPropertyCard(property) {
   return `
     <article class="property-card">
-      <img
-        class="property-image"
-        src="${getImageUrl(property.image_url)}"
-        alt="${property.title}"
-        onerror="this.src='https://picsum.photos/600/400?random=99'"
-      />
-      <div class="property-content">
-        <span class="badge">${property.category}</span>
-        <h3 class="property-title">${property.title}</h3>
+      <div class="property-image-wrap">
+        <span class="property-badge">${property.category}</span>
+        <img
+          class="property-image"
+          src="${getImageUrl(property.image_url)}"
+          alt="${property.title}"
+          onerror="this.src='https://picsum.photos/900/700?random=99'"
+        />
+      </div>
 
-        <div class="property-meta">
-          <div><strong>المدينة:</strong> ${property.city}</div>
-          <div><strong>الحي:</strong> ${property.district}</div>
-          <div><strong>المساحة:</strong> ${property.area} م²</div>
-          <div><strong>الأبعاد:</strong> ${property.length} × ${property.width}</div>
+      <div class="property-content">
+        <div class="property-head">
+          <h3 class="property-title">${property.title}</h3>
+          <div class="property-price">${formatPrice(property)}</div>
         </div>
 
-        <p class="property-description">${property.description}</p>
+        <div class="property-location">
+          📍 ${property.city} - ${property.district}
+        </div>
 
-        <div class="property-price">${formatPrice(property)}</div>
+        <div class="property-meta">
+          <div class="meta-box">
+            <span class="meta-label">المساحة</span>
+            <span class="meta-value">${property.area} م²</span>
+          </div>
+
+          <div class="meta-box">
+            <span class="meta-label">الأبعاد</span>
+            <span class="meta-value">${property.length} × ${property.width}</span>
+          </div>
+        </div>
+
+        <p class="property-description">${property.description || "لا يوجد وصف إضافي."}</p>
+
+        <div class="property-actions">
+          <a
+            class="btn btn-primary property-btn"
+            href="https://wa.me/${WHATSAPP_NUMBER}?text=${getWhatsAppMessage(property)}"
+            target="_blank"
+          >
+            واتساب
+          </a>
+
+          <a
+            class="btn btn-secondary property-btn"
+            href="tel:0556104669"
+          >
+            اتصال
+          </a>
+        </div>
       </div>
     </article>
   `;
@@ -181,7 +227,12 @@ function applyFilters() {
   renderProperties(filtered);
 }
 
-searchInput.addEventListener("input", applyFilters);
-categoryFilter.addEventListener("change", applyFilters);
+if (searchInput) {
+  searchInput.addEventListener("input", applyFilters);
+}
+
+if (categoryFilter) {
+  categoryFilter.addEventListener("change", applyFilters);
+}
 
 loadProperties();
