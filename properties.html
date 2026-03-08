@@ -3,41 +3,88 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>العقارات | مكتب التسويق العقاري</title>
+  <title>العقارات | شركة أصحاب التميز العقارية</title>
+  <meta
+    name="description"
+    content="استعرض العقارات والأراضي المتاحة بشكل حديث وواضح مع فلترة وبحث سريع."
+  />
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
   <header class="site-header">
     <div class="container nav">
-      <h1 class="logo">مكتب التسويق العقاري</h1>
-      <nav>
+      <a href="index.html" class="brand">
+        <span class="brand-badge">AT</span>
+        <div>
+          <div class="brand-title">شركة أصحاب التميز العقارية</div>
+          <div class="brand-subtitle">Real Estate • Modern Experience</div>
+        </div>
+      </a>
+
+      <nav class="nav-links">
         <a href="index.html">الرئيسية</a>
         <a href="properties.html" class="active">العقارات</a>
+        <a href="index.html#services">الخدمات</a>
+        <a href="index.html#contact">تواصل</a>
       </nav>
+
+      <a class="btn btn-primary desktop-only" href="https://wa.me/966556104669" target="_blank">واتساب</a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة">
+        ☰
+      </button>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html">الرئيسية</a>
+      <a href="properties.html">العقارات</a>
+      <a href="index.html#services">الخدمات</a>
+      <a href="index.html#contact">تواصل</a>
     </div>
   </header>
 
   <main class="container">
-    <section class="page-hero">
-      <h2>العقارات المتاحة</h2>
-      <p>استعرض الأراضي والعقارات المتاحة حاليًا.</p>
+    <section class="page-hero modern-page-hero glass-card">
+      <div>
+        <span class="section-kicker">العروض</span>
+        <h1 class="page-title">العقارات المتاحة حاليًا</h1>
+        <p class="page-subtitle">
+          تصفح الإعلانات، ابحث بالاسم أو المدينة أو الحي، وفرز حسب نوع العقار.
+        </p>
+      </div>
+
+      <div class="hero-badges">
+        <span class="soft-badge">حديث</span>
+        <span class="soft-badge">سريع</span>
+        <span class="soft-badge">مربوط مع Google Sheets</span>
+      </div>
     </section>
 
-    <section class="filters">
-      <input type="text" id="searchInput" placeholder="ابحث باسم العقار أو المدينة أو الحي" />
-      <select id="categoryFilter">
-        <option value="">كل الأنواع</option>
-        <option value="أرض">أرض</option>
-        <option value="فيلا">فيلا</option>
-        <option value="شقة">شقة</option>
-        <option value="عمارة">عمارة</option>
-      </select>
+    <section class="filters modern-filters glass-card">
+      <div class="filter-field">
+        <label for="searchInput">البحث</label>
+        <input type="text" id="searchInput" placeholder="ابحث باسم العقار أو المدينة أو الحي" />
+      </div>
+
+      <div class="filter-field">
+        <label for="categoryFilter">نوع العقار</label>
+        <select id="categoryFilter">
+          <option value="">كل الأنواع</option>
+          <option value="أرض">أرض</option>
+          <option value="فيلا">فيلا</option>
+          <option value="شقة">شقة</option>
+          <option value="عمارة">عمارة</option>
+        </select>
+      </div>
     </section>
 
-    <section id="loadingMessage" class="status-box">جاري تحميل العقارات...</section>
+    <section id="loadingMessage" class="status-box glass-card">جاري تحميل العقارات...</section>
     <section id="errorMessage" class="status-box error hidden">حدث خطأ أثناء تحميل البيانات.</section>
 
-    <section id="propertiesContainer" class="properties-grid"></section>
+    <section id="propertiesContainer" class="properties-grid modern-properties-grid"></section>
   </main>
 
   <script src="assets/js/properties.js"></script>
