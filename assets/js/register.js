@@ -1,44 +1,64 @@
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxv3UZ19OA1X8PocDkQ5-HduMB6GNz9nT7fzKqDxisNdcKsXonNd60VLEZ1rA3OdQW37g/exec";
 
-const registerForm = document.getElementById("registerForm");
-const formMessage = document.getElementById("formMessage");
+const form = document.getElementById("registerForm");
+const msg = document.getElementById("msg");
 
-registerForm.addEventListener("submit", async (e) => {
+form.addEventListener("submit", async function (e) {
   e.preventDefault();
 
   const phone = document.getElementById("phone").value.trim();
   const password = document.getElementById("password").value.trim();
 
   if (!phone || !password) {
-    showMessage("يرجى تعبئة جميع الحقول", true);
+    showMessage("يرجى إدخال جميع البيانات", true);
     return;
   }
+
+  showMessage("جاري الإرسال...");
+
+  const formData = new FormData();
+  formData.append("phone", phone);
+  formData.append("password", password);
 
   try {
     const response = await fetch(SCRIPT_URL, {
       method: "POST",
-      body: JSON.stringify({ phone, password }),
-      headers: {
-        "Content-Type": "application/json"
-      }
+      body: formData
     });
 
-    const result = await response.json();
+    const text = await response.text();
 
-    if (result.success) {
-      showMessage("تم التسجيل بنجاح");
-      registerForm.reset();
-    } else {
-      showMessage(result.message || "حدث خطأ أثناء التسجيل", true);
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (parseError) {
+      console.error("Response is not valid JSON:", text);
+      showMessage("وصل رد غير متوقع من الخدمة", true);
+      return;
     }
+
+    if (data.success) {
+      showMessage("تم التسجيل بنجاح ✅");
+      form.reset();
+    } else {
+      showMessage(data.message || "فشل التسجيل", true);
+    }
+
   } catch (error) {
-    console.error(error);
+    console.error("Fetch error:", error);
     showMessage("تعذر الاتصال بالخدمة", true);
   }
 });
 
 function showMessage(message, isError = false) {
-  formMessage.textContent = message;
-  formMessage.classList.remove("hidden");
-  formMessage.classList.toggle("error", isError);
+  msg.textContent = message;
+  msg.style.marginTop = "15px";
+  msg.style.padding = "12px 14px";
+  msg.style.borderRadius = "12px";
+  msg.style.fontWeight = "700";
+  msg.style.background = isError ? "rgba(255, 107, 107, 0.12)" : "rgba(37, 230, 165, 0.12)";
+  msg.style.border = isError
+    ? "1px solid rgba(255, 107, 107, 0.35)"
+    : "1px solid rgba(37, 230, 165, 0.35)";
+  msg.style.color = isError ? "#ffd6d6" : "#dffff5";
 }
