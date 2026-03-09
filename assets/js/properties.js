@@ -1,5 +1,5 @@
 const SHEET_CSV_URL =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vR2yrRpyHGbd4fOoEaW995KltoXHLpozI9UKNKt2dITY131GAbNqg2CWAcjJ9Nt52u2j4847eOYie_J/pub?gid=271143107&single=true&output=csv";
+  "https://docs.google.com/spreadsheets/d/1xRmTmnW_46480dkSjXNK6TUGQ44o6Ex5THNolGl_BNM/edit?usp=sharing";
 
 const WHATSAPP_NUMBER = "966556104669";
 
@@ -239,3 +239,4 @@ if (categoryFilter) {
 }
 
 loadProperties();
+
