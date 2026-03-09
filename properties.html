@@ -27,7 +27,9 @@
       <nav class="nav-links">
         <a href="index.html">الرئيسية</a>
         <a href="properties.html" class="active">العقارات</a>
-        <a href="index.html#services">الخدمات</a>
+        <a href="register.html" class="guest-only">تسجيل</a>
+        <a href="login.html" class="guest-only">دخول</a>
+        <a href="dashboard.html" class="user-only hidden">لوحتي</a>
         <a href="index.html#contact">تواصل</a>
       </nav>
 
@@ -41,7 +43,9 @@
     <div class="mobile-menu" id="mobileMenu">
       <a href="index.html">الرئيسية</a>
       <a href="properties.html">العقارات</a>
-      <a href="index.html#services">الخدمات</a>
+      <a href="register.html" class="guest-only">تسجيل</a>
+      <a href="login.html" class="guest-only">دخول</a>
+      <a href="dashboard.html" class="user-only hidden">لوحتي</a>
       <a href="index.html#contact">تواصل</a>
     </div>
   </header>
@@ -87,6 +91,17 @@
     <section id="propertiesContainer" class="properties-grid modern-properties-grid"></section>
   </main>
 
+  <script src="assets/js/main.js"></script>
   <script src="assets/js/properties.js"></script>
+  <script>
+    const userPhone = localStorage.getItem("userPhone");
+    const guestOnlyItems = document.querySelectorAll(".guest-only");
+    const userOnlyItems = document.querySelectorAll(".user-only");
+
+    if (userPhone) {
+      guestOnlyItems.forEach((item) => item.classList.add("hidden"));
+      userOnlyItems.forEach((item) => item.classList.remove("hidden"));
+    }
+  </script>
 </body>
 </html>
