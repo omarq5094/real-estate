@@ -260,5 +260,8 @@ ${property.title}
     categoryFilter.addEventListener("change", applyFilters);
   }
 
+  document.addEventListener("DOMContentLoaded", function () {
   loadProperties();
 });
+});
+
