@@ -1,5 +1,5 @@
 const SHEET_CSV_URL =
-  "https://script.google.com/macros/s/AKfycbwBRXleXMaOtaEsA3m9HfbX2zArAGSvsiaSSp0-1gbgOqE2hiL5_czP5RY3c9VMgOEmCw/exec";
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vR2yrRpyHGbd4fOoEaW995KltoXHLpozI9UKNKt2dITY131GAbNqg2CWAcjJ9Nt52u2j4847eOYie_J/pub?gid=271143107&single=true&output=csv";
 
 const WHATSAPP_NUMBER = "966556104669";
 
@@ -34,7 +34,6 @@ async function loadProperties() {
       .filter((property) => isVisible(property));
 
     renderProperties(allProperties);
-
     loadingMessage.classList.add("hidden");
   } catch (error) {
     console.error("Load Error:", error);
@@ -110,7 +109,7 @@ function isVisible(property) {
 }
 
 function formatPrice(property) {
-  if (property.price_type.toLowerCase() === "sum") {
+  if (String(property.price_type).toLowerCase() === "sum") {
     return "السوم";
   }
 
@@ -131,7 +130,11 @@ function getImageUrl(imageUrl) {
 
 function getWhatsAppMessage(property) {
   return encodeURIComponent(
-    `مرحبًا، لدي اهتمام بهذا العقار:\n${property.title}\nالمدينة: ${property.city}\nالحي: ${property.district}\nالسعر: ${formatPrice(property)}`
+    `مرحبًا، لدي اهتمام بهذا العقار:
+${property.title}
+المدينة: ${property.city}
+الحي: ${property.district}
+السعر: ${formatPrice(property)}`
   );
 }
 
@@ -236,4 +239,3 @@ if (categoryFilter) {
 }
 
 loadProperties();
-
