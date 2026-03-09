@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyoG_g3ELKfAuuj1wHBGDahm0RlyD1D4mhnnqlS_0oF11CNhAMBPyzEU07Xd3iqXS3Jiw/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyVU8Al0Utaw9D8OECTx3fupkvi_pfbvXaZhS-G1wQ-4aQ9u4WFicRoSvfEoJoAHV1o6g/exec";
 
 const form = document.getElementById("registerForm");
 const msg = document.getElementById("msg");
