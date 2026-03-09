@@ -29,7 +29,7 @@
         <a href="index.html">الرئيسية</a>
         <a href="properties.html">العقارات</a>
         <a href="register.html" class="active">تسجيل</a>
-        <a href="index.html#services">الخدمات</a>
+        <a href="login.html">دخول</a>
         <a href="index.html#contact">تواصل</a>
       </nav>
 
@@ -46,7 +46,7 @@
       <a href="index.html">الرئيسية</a>
       <a href="properties.html">العقارات</a>
       <a href="register.html">تسجيل</a>
-      <a href="index.html#services">الخدمات</a>
+      <a href="login.html">دخول</a>
       <a href="index.html#contact">تواصل</a>
     </div>
   </header>
@@ -59,7 +59,7 @@
       <span class="section-kicker">تسجيل</span>
       <h1 class="section-title" style="margin-bottom: 12px;">إنشاء حساب جديد</h1>
       <p class="section-text" style="margin-bottom: 24px;">
-        أدخل رقم الجوال وكلمة المرور، وسيتم حفظ البيانات مباشرة في النظام.
+        أدخل رقم الجوال وكلمة المرور لإنشاء حساب جديد.
       </p>
 
       <form id="registerForm" style="display: grid; gap: 16px;">
@@ -86,15 +86,21 @@
         </div>
 
         <button type="submit" class="btn btn-primary">
-          تسجيل
+          إنشاء حساب
         </button>
       </form>
 
       <div id="msg"></div>
+
+      <div style="margin-top: 18px; color: var(--muted);">
+        لديك حساب بالفعل؟
+        <a href="login.html" style="color: var(--primary); font-weight: 800;">تسجيل الدخول</a>
+      </div>
     </section>
   </main>
 
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/config.js"></script>
   <script src="assets/js/register.js"></script>
 </body>
 </html>
