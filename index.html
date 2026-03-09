@@ -16,250 +16,280 @@
 <div class="bg-glow bg-glow-2"></div>
 
 <header class="site-header">
-<div class="container nav">
+  <div class="container nav">
 
-<a href="index.html" class="brand">
-<span class="brand-badge">AT</span>
-<div>
-<div class="brand-title">شركة أصحاب التميز العقارية</div>
-<div class="brand-subtitle">Real Estate • Modern Experience</div>
-</div>
-</a>
+    <a href="index.html" class="brand">
+      <span class="brand-badge">AT</span>
+      <div>
+        <div class="brand-title">شركة أصحاب التميز العقارية</div>
+        <div class="brand-subtitle">Real Estate • Modern Experience</div>
+      </div>
+    </a>
 
-<nav class="nav-links">
-<a href="index.html" class="active">الرئيسية</a>
-<a href="properties.html">العقارات</a>
-<a href="register.html">تسجيل</a>
-<a href="#services">الخدمات</a>
-<a href="#contact">تواصل</a>
-</nav>
+    <nav class="nav-links">
+      <a href="index.html" class="active">الرئيسية</a>
+      <a href="properties.html">العقارات</a>
+      <a href="register.html" class="guest-only">تسجيل</a>
+      <a href="login.html" class="guest-only">دخول</a>
+      <a href="dashboard.html" class="user-only hidden">لوحتي</a>
+      <a href="#services">الخدمات</a>
+      <a href="#contact">تواصل</a>
+    </nav>
 
-<a class="btn btn-primary desktop-only" href="properties.html">
-استعرض العقارات
-</a>
+    <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+      <a class="btn btn-secondary desktop-only guest-only" href="register.html">
+        إنشاء حساب
+      </a>
 
-<button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة">
-☰
-</button>
+      <a class="btn btn-primary desktop-only guest-only" href="login.html">
+        تسجيل دخول
+      </a>
 
-</div>
+      <a class="btn btn-primary desktop-only user-only hidden" href="dashboard.html">
+        لوحتي
+      </a>
 
-<div class="mobile-menu" id="mobileMenu">
-<a href="index.html">الرئيسية</a>
-<a href="properties.html">العقارات</a>
-<a href="register.html">تسجيل</a>
-<a href="#services">الخدمات</a>
-<a href="#contact">تواصل</a>
-</div>
+      <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة">
+        ☰
+      </button>
+    </div>
+
+  </div>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">الرئيسية</a>
+    <a href="properties.html">العقارات</a>
+    <a href="register.html" class="guest-only">تسجيل</a>
+    <a href="login.html" class="guest-only">دخول</a>
+    <a href="dashboard.html" class="user-only hidden">لوحتي</a>
+    <a href="#services">الخدمات</a>
+    <a href="#contact">تواصل</a>
+  </div>
 </header>
 
 <main>
 
-<section class="hero-section container">
-<div class="hero-grid">
+  <section class="hero-section container">
+    <div class="hero-grid">
 
-<div class="hero-content glass-card">
+      <div class="hero-content glass-card">
 
-<div class="hero-pill">
-⚡ سرعة إنجاز • ✅ وضوح • 🤝 حلول مناسبة
-</div>
+        <div class="hero-pill">
+          ⚡ سرعة إنجاز • ✅ وضوح • 🤝 حلول مناسبة
+        </div>
 
-<h1 class="hero-title">
-نوصلك إلى <span>العقار المناسب</span>
-<br />
-بواجهة حديثة وقرار أوضح
-</h1>
+        <h1 class="hero-title">
+          نوصلك إلى <span>العقار المناسب</span>
+          <br />
+          بواجهة حديثة وقرار أوضح
+        </h1>
 
-<p class="hero-text">
-نعرض الأراضي والعقارات بشكل احترافي وواضح، مع تجربة استخدام سريعة
-وترتيب ذكي يساعد العميل على الوصول إلى العرض المناسب بدون تعقيد.
-</p>
+        <p class="hero-text">
+          نعرض الأراضي والعقارات بشكل احترافي وواضح، مع تجربة استخدام سريعة
+          وترتيب ذكي يساعد العميل على الوصول إلى العرض المناسب بدون تعقيد.
+        </p>
 
-<div class="hero-actions">
+        <div class="hero-actions">
+          <a href="properties.html" class="btn btn-primary">
+            عرض العقارات
+          </a>
 
-<a href="properties.html" class="btn btn-primary">
-عرض العقارات
-</a>
+          <a href="register.html" class="btn btn-secondary guest-only">
+            إنشاء حساب
+          </a>
 
-<a href="register.html" class="btn btn-secondary">
-تسجيل مستخدم
-</a>
+          <a href="login.html" class="btn btn-outline guest-only">
+            تسجيل دخول
+          </a>
 
-<a href="https://wa.me/966556104669" target="_blank" class="btn btn-outline">
-واتساب
-</a>
+          <a href="dashboard.html" class="btn btn-secondary user-only hidden">
+            لوحتي
+          </a>
+        </div>
 
-</div>
+        <div class="hero-stats">
 
-<div class="hero-stats">
+          <div class="stat-card glass-mini">
+            <div class="stat-number">حديث</div>
+            <div class="stat-label">تصميم عصري</div>
+          </div>
 
-<div class="stat-card glass-mini">
-<div class="stat-number">حديث</div>
-<div class="stat-label">تصميم عصري</div>
-</div>
+          <div class="stat-card glass-mini">
+            <div class="stat-number">واضح</div>
+            <div class="stat-label">عرض مباشر للبيانات</div>
+          </div>
 
-<div class="stat-card glass-mini">
-<div class="stat-number">واضح</div>
-<div class="stat-label">عرض مباشر للبيانات</div>
-</div>
+          <div class="stat-card glass-mini">
+            <div class="stat-number">سريع</div>
+            <div class="stat-label">تجربة تصفح خفيفة</div>
+          </div>
 
-<div class="stat-card glass-mini">
-<div class="stat-number">سريع</div>
-<div class="stat-label">تجربة تصفح خفيفة</div>
-</div>
+        </div>
+      </div>
 
-</div>
-</div>
+      <div class="hero-side glass-card">
 
-<div class="hero-side glass-card">
+        <h3 class="side-title">Value Proposition</h3>
 
-<h3 class="side-title">Value Proposition</h3>
+        <div class="value-list">
 
-<div class="value-list">
+          <div class="value-item">
+            <div class="value-dot"></div>
+            <div>
+              <h4>فلترة دقيقة</h4>
+              <p>نختصر عليك الزحمة ونقربك للعقار المناسب بسرعة.</p>
+            </div>
+          </div>
 
-<div class="value-item">
-<div class="value-dot"></div>
-<div>
-<h4>فلترة دقيقة</h4>
-<p>نختصر عليك الزحمة ونقربك للعقار المناسب بسرعة.</p>
-</div>
-</div>
+          <div class="value-item">
+            <div class="value-dot"></div>
+            <div>
+              <h4>شفافية في التفاصيل</h4>
+              <p>عرض واضح للمساحة والسعر والوصف وحالة الإعلان.</p>
+            </div>
+          </div>
 
-<div class="value-item">
-<div class="value-dot"></div>
-<div>
-<h4>شفافية في التفاصيل</h4>
-<p>عرض واضح للمساحة والسعر والوصف وحالة الإعلان.</p>
-</div>
-</div>
+          <div class="value-item">
+            <div class="value-dot"></div>
+            <div>
+              <h4>واجهة احترافية</h4>
+              <p>شكل حديث يعطي انطباع قوي ويخدم الهوية العقارية.</p>
+            </div>
+          </div>
 
-<div class="value-item">
-<div class="value-dot"></div>
-<div>
-<h4>واجهة احترافية</h4>
-<p>شكل حديث يعطي انطباع قوي ويخدم الهوية العقارية.</p>
-</div>
-</div>
+          <div class="contact-chip">
+            <span>الهاتف:</span>
+            <strong>0556104669</strong>
+          </div>
 
-<div class="contact-chip">
-<span>الهاتف:</span>
-<strong>0556104669</strong>
-</div>
+        </div>
+      </div>
 
-</div>
-</div>
+    </div>
+  </section>
 
-</div>
-</section>
+  <section class="section container" id="services">
 
-<section class="section container" id="services">
+    <div class="section-head">
 
-<div class="section-head">
+      <div>
+        <span class="section-kicker">الخدمات</span>
+        <h2 class="section-title">ماذا نقدم؟</h2>
+      </div>
 
-<div>
-<span class="section-kicker">الخدمات</span>
-<h2 class="section-title">ماذا نقدم؟</h2>
-</div>
+      <p class="section-text">
+        منصة عرض واضحة للعقارات مع تجربة استخدام عملية،
+        قابلة للتطوير لاحقًا لتصبح قناة Lead Generation قوية.
+      </p>
 
-<p class="section-text">
-منصة عرض واضحة للعقارات مع تجربة استخدام عملية،
-قابلة للتطوير لاحقًا لتصبح قناة Lead Generation قوية.
-</p>
+    </div>
 
-</div>
+    <div class="services-grid">
 
-<div class="services-grid">
+      <div class="service-card glass-card">
+        <div class="service-icon">🏡</div>
+        <h3>عرض الأراضي</h3>
+        <p>تنظيم العقارات على شكل بطاقات واضحة مع بيانات قابلة للتحديث بسهولة.</p>
+      </div>
 
-<div class="service-card glass-card">
-<div class="service-icon">🏡</div>
-<h3>عرض الأراضي</h3>
-<p>تنظيم العقارات على شكل بطاقات واضحة مع بيانات قابلة للتحديث بسهولة.</p>
-</div>
+      <div class="service-card glass-card">
+        <div class="service-icon">📍</div>
+        <h3>فرز حسب المدينة</h3>
+        <p>الوصول السريع إلى العقارات حسب الحي أو المدينة أو نوع العقار.</p>
+      </div>
 
-<div class="service-card glass-card">
-<div class="service-icon">📍</div>
-<h3>فرز حسب المدينة</h3>
-<p>الوصول السريع إلى العقارات حسب الحي أو المدينة أو نوع العقار.</p>
-</div>
+      <div class="service-card glass-card">
+        <div class="service-icon">💬</div>
+        <h3>تواصل مباشر</h3>
+        <p>ربط فوري عبر الاتصال أو واتساب لتسريع التحويل من زيارة إلى Lead.</p>
+      </div>
 
-<div class="service-card glass-card">
-<div class="service-icon">💬</div>
-<h3>تواصل مباشر</h3>
-<p>ربط فوري عبر الاتصال أو واتساب لتسريع التحويل من زيارة إلى Lead.</p>
-</div>
+    </div>
+  </section>
 
-</div>
-</section>
+  <section class="section container">
 
-<section class="section container">
+    <div class="cta-box glass-card">
 
-<div class="cta-box glass-card">
+      <div>
+        <span class="section-kicker">ابدأ الآن</span>
+        <h2 class="section-title">استعرض العقارات المتاحة حاليًا</h2>
 
-<div>
-<span class="section-kicker">ابدأ الآن</span>
-<h2 class="section-title">استعرض العقارات المتاحة حاليًا</h2>
+        <p class="section-text">
+          صفحة العقارات مربوطة مباشرة مع Google Sheets،
+          لذلك يمكنك تعديل العروض بسهولة بدون تعديل الكود.
+        </p>
+      </div>
 
-<p class="section-text">
-صفحة العقارات مربوطة مباشرة مع Google Sheets،
-لذلك يمكنك تعديل العروض بسهولة بدون تعديل الكود.
-</p>
-</div>
+      <div class="cta-actions">
 
-<div class="cta-actions">
+        <a href="properties.html" class="btn btn-primary">
+          الانتقال إلى العقارات
+        </a>
 
-<a href="properties.html" class="btn btn-primary">
-الانتقال إلى العقارات
-</a>
+        <a href="register.html" class="btn btn-secondary guest-only">
+          إنشاء حساب
+        </a>
 
-<a href="register.html" class="btn btn-secondary">
-تسجيل مستخدم
-</a>
+        <a href="login.html" class="btn btn-outline guest-only">
+          تسجيل دخول
+        </a>
 
-<a href="https://wa.me/966556104669" target="_blank" class="btn btn-outline">
-واتساب
-</a>
+        <a href="dashboard.html" class="btn btn-secondary user-only hidden">
+          لوحتي
+        </a>
 
-</div>
+      </div>
 
-</div>
-</section>
+    </div>
+  </section>
 
-<section class="section container" id="contact">
+  <section class="section container" id="contact">
 
-<div class="section-head">
-<div>
-<span class="section-kicker">تواصل</span>
-<h2 class="section-title">جاهزون لخدمتك</h2>
-</div>
-</div>
+    <div class="section-head">
+      <div>
+        <span class="section-kicker">تواصل</span>
+        <h2 class="section-title">جاهزون لخدمتك</h2>
+      </div>
+    </div>
 
-<div class="contact-grid">
+    <div class="contact-grid">
 
-<div class="contact-card glass-card">
-<h3>اتصال مباشر</h3>
-<p>للاستفسار عن الأراضي والعقارات والعروض المتاحة.</p>
-<a class="contact-link" href="tel:0556104669">0556104669</a>
-</div>
+      <div class="contact-card glass-card">
+        <h3>اتصال مباشر</h3>
+        <p>للاستفسار عن الأراضي والعقارات والعروض المتاحة.</p>
+        <a class="contact-link" href="tel:0556104669">0556104669</a>
+      </div>
 
-<div class="contact-card glass-card">
-<h3>واتساب</h3>
-<p>تواصل سريع لمشاركة الموقع أو إرسال تفاصيل العقار المطلوب.</p>
-<a class="contact-link" href="https://wa.me/966556104669" target="_blank">افتح واتساب</a>
-</div>
+      <div class="contact-card glass-card">
+        <h3>واتساب</h3>
+        <p>تواصل سريع لمشاركة الموقع أو إرسال تفاصيل العقار المطلوب.</p>
+        <a class="contact-link" href="https://wa.me/966556104669" target="_blank">افتح واتساب</a>
+      </div>
 
-<div class="contact-card glass-card">
-<h3>العقارات</h3>
-<p>تصفح كل الإعلانات المضافة حاليًا من صفحة العروض.</p>
-<a class="contact-link" href="properties.html">عرض العقارات</a>
-</div>
+      <div class="contact-card glass-card">
+        <h3>العقارات</h3>
+        <p>تصفح كل الإعلانات المضافة حاليًا من صفحة العروض.</p>
+        <a class="contact-link" href="properties.html">عرض العقارات</a>
+      </div>
 
-</div>
+    </div>
 
-</section>
+  </section>
 
 </main>
 
 <script src="assets/js/main.js"></script>
+<script>
+  const userPhone = localStorage.getItem("userPhone");
+  const guestOnlyItems = document.querySelectorAll(".guest-only");
+  const userOnlyItems = document.querySelectorAll(".user-only");
+
+  if (userPhone) {
+    guestOnlyItems.forEach((item) => item.classList.add("hidden"));
+    userOnlyItems.forEach((item) => item.classList.remove("hidden"));
+  }
+</script>
 
 </body>
 </html>
