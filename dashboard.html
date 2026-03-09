@@ -1,1 +1,66 @@
 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة المستخدم | شركة أصحاب التميز العقارية</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a href="index.html" class="brand">
+        <span class="brand-badge">AT</span>
+        <div>
+          <div class="brand-title">شركة أصحاب التميز العقارية</div>
+          <div class="brand-subtitle">Real Estate • Modern Experience</div>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="index.html">الرئيسية</a>
+        <a href="properties.html">العقارات</a>
+        <a href="dashboard.html" class="active">لوحتي</a>
+      </nav>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة">
+        ☰
+      </button>
+    </div>
+  </header>
+
+  <main class="container" style="padding: 60px 0;">
+    <section class="glass-card" style="padding: 30px; border-radius: 28px;">
+      <span class="section-kicker">لوحة المستخدم</span>
+      <h1 class="section-title" style="margin-bottom: 12px;">مرحبًا بك</h1>
+      <p class="section-text" id="userPhone" style="margin-bottom: 24px;"></p>
+
+      <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a href="properties.html" class="btn btn-primary">عرض العقارات</a>
+        <button id="logoutBtn" class="btn btn-outline">تسجيل خروج</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/js/main.js"></script>
+  <script>
+    const phone = localStorage.getItem("userPhone");
+
+    if (!phone) {
+      window.location.href = "login.html";
+    }
+
+    document.getElementById("userPhone").textContent = "رقم الجوال: " + phone;
+
+    document.getElementById("logoutBtn").addEventListener("click", function () {
+      localStorage.removeItem("userPhone");
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>
