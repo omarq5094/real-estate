@@ -1,6 +1,4 @@
-const SHEET_CSV_URL =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vR2yrRpyHGbd4fOoEaW995KltoXHLpozI9UKNKt2dITY131GAbNqg2CWAcjJ9Nt52u2j4847eOYie_J/pub?output=csv";
-
+const SCRIPT_URL = window.APP_CONFIG.SCRIPT_URL;
 const WHATSAPP_NUMBER = "966556104669";
 
 let allProperties = [];
@@ -11,20 +9,56 @@ document.addEventListener("DOMContentLoaded", () => {
   const errorMessage = document.getElementById("errorMessage");
   const searchInput = document.getElementById("searchInput");
   const categoryFilter = document.getElementById("categoryFilter");
+  const menuToggle = document.getElementById("menuToggle");
+  const mobileMenu = document.getElementById("mobileMenu");
+
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener("click", () => {
+      mobileMenu.classList.toggle("show");
+    });
+  }
 
   async function loadProperties() {
     try {
-      const response = await fetch(SHEET_CSV_URL);
-
-      if (!response.ok) {
-        throw new Error("فشل تحميل البيانات");
+      if (loadingMessage) {
+        loadingMessage.classList.remove("hidden");
       }
 
-      const csvText = await response.text();
-      const rows = parseCSV(csvText);
+      if (errorMessage) {
+        errorMessage.classList.add("hidden");
+      }
 
-      allProperties = rows
-        .map(mapRowToProperty)
+      if (!SCRIPT_URL) {
+        throw new Error("SCRIPT_URL غير موجود في APP_CONFIG");
+      }
+
+      const response = await fetch(SCRIPT_URL, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`فشل تحميل البيانات: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Properties API Response:", data);
+
+      let properties = [];
+
+      if (Array.isArray(data)) {
+        properties = data;
+      } else if (data && Array.isArray(data.data)) {
+        properties = data.data;
+      } else {
+        console.warn("API did not return an array:", data);
+        properties = [];
+      }
+
+      allProperties = properties
+        .map(mapProperty)
         .filter((property) => isVisible(property));
 
       renderProperties(allProperties);
@@ -33,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
         loadingMessage.classList.add("hidden");
       }
     } catch (error) {
-      console.error(error);
+      console.error("Load Properties Error:", error);
 
       if (loadingMessage) {
         loadingMessage.classList.add("hidden");
@@ -45,60 +79,46 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function parseCSV(csvText) {
-    const lines = csvText.trim().split("\n");
-    const headers = lines[0].split(",").map((h) => h.trim());
-
-    return lines.slice(1).map((line) => {
-      const values = line.split(",");
-      const row = {};
-
-      headers.forEach((header, index) => {
-        row[header] = (values[index] || "").trim();
-      });
-
-      return row;
-    });
-  }
-
-  function mapRowToProperty(row) {
+  function mapProperty(row) {
     return {
-      id: row.id || "",
-      title: row.title || "بدون عنوان",
-      category: row.category || "",
-      city: row.city || "",
-      district: row.district || "",
-      area: row.area || "",
-      length: row.length || "",
-      width: row.width || "",
-      price: row.price || "",
-      price_type: row.price_type || "price",
-      description: row.description || "",
-      is_visible: row.is_visible || "FALSE",
+      id: String(row.id || "").trim(),
+      title: String(row.title || "بدون عنوان").trim(),
+      category: String(row.category || "غير محدد").trim(),
+      city: String(row.city || "غير محدد").trim(),
+      district: String(row.district || "غير محدد").trim(),
+      area: String(row.area || "-").trim(),
+      length: String(row.length || "-").trim(),
+      width: String(row.width || "-").trim(),
+      price: String(row.price || "").trim(),
+      price_type: String(row.price_type || "price").trim(),
+      description: String(row.description || "").trim(),
+      is_visible: String(row.is_visible || "FALSE").trim(),
     };
   }
 
   function isVisible(property) {
-    return String(property.is_visible).trim().toUpperCase() === "TRUE";
+    return String(property.is_visible || "").trim().toUpperCase() === "TRUE";
   }
 
   function formatPrice(property) {
-    if (property.price_type === "sum") {
+    if (String(property.price_type || "").toLowerCase() === "sum") {
       return "السوم";
     }
 
-    const price = Number(property.price);
+    const numericPrice = Number(
+      String(property.price || "").replace(/,/g, "")
+    );
 
-    if (!price) {
+    if (!numericPrice) {
       return "غير محدد";
     }
 
-    return price.toLocaleString("en-US") + " ريال";
+    return `${numericPrice.toLocaleString("en-US")} ريال`;
   }
 
   function getWhatsAppMessage(property) {
     return encodeURIComponent(
-`مرحبًا، لدي اهتمام بهذا العقار:
+      `مرحبًا، لدي اهتمام بهذا العقار:
 ${property.title}
 المدينة: ${property.city}
 الحي: ${property.district}
@@ -109,42 +129,38 @@ ${property.title}
   function createPropertyCard(property) {
     return `
       <article class="property-card">
-
         <div class="property-content">
-
           <div class="property-head">
-            <h3 class="property-title">${property.title}</h3>
+            <h3 class="property-title">${escapeHtml(property.title)}</h3>
             <div class="property-price">${formatPrice(property)}</div>
           </div>
 
           <div class="property-location">
-            📍 ${property.city} - ${property.district}
+            📍 ${escapeHtml(property.city)} - ${escapeHtml(property.district)}
           </div>
 
           <div class="property-meta">
-
             <div class="meta-box">
               <span class="meta-label">المساحة</span>
-              <span class="meta-value">${property.area} م²</span>
+              <span class="meta-value">${escapeHtml(property.area)} م²</span>
             </div>
 
             <div class="meta-box">
               <span class="meta-label">الأبعاد</span>
-              <span class="meta-value">${property.length} × ${property.width}</span>
+              <span class="meta-value">${escapeHtml(property.length)} × ${escapeHtml(property.width)}</span>
             </div>
-
           </div>
 
           <p class="property-description">
-            ${property.description || "لا يوجد وصف إضافي."}
+            ${escapeHtml(property.description || "لا يوجد وصف إضافي.")}
           </p>
 
           <div class="property-actions">
-
             <a
               class="btn btn-primary property-btn"
               href="https://wa.me/${WHATSAPP_NUMBER}?text=${getWhatsAppMessage(property)}"
               target="_blank"
+              rel="noopener noreferrer"
             >
               واتساب
             </a>
@@ -155,16 +171,18 @@ ${property.title}
             >
               اتصال
             </a>
-
           </div>
-
         </div>
-
       </article>
     `;
   }
 
   function renderProperties(properties) {
+    if (!propertiesContainer) {
+      console.error("propertiesContainer غير موجود في الصفحة");
+      return;
+    }
+
     if (!properties.length) {
       propertiesContainer.innerHTML = `
         <div class="empty-box">
@@ -180,14 +198,14 @@ ${property.title}
   }
 
   function applyFilters() {
-    const searchValue = searchInput.value.toLowerCase();
-    const selectedCategory = categoryFilter.value;
+    const searchValue = String(searchInput?.value || "").trim().toLowerCase();
+    const selectedCategory = String(categoryFilter?.value || "").trim();
 
     const filtered = allProperties.filter((property) => {
       const matchesSearch =
-        property.title.toLowerCase().includes(searchValue) ||
-        property.city.toLowerCase().includes(searchValue) ||
-        property.district.toLowerCase().includes(searchValue);
+        String(property.title || "").toLowerCase().includes(searchValue) ||
+        String(property.city || "").toLowerCase().includes(searchValue) ||
+        String(property.district || "").toLowerCase().includes(searchValue);
 
       const matchesCategory =
         !selectedCategory || property.category === selectedCategory;
@@ -196,6 +214,15 @@ ${property.title}
     });
 
     renderProperties(filtered);
+  }
+
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
   }
 
   if (searchInput) {
