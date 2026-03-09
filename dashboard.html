@@ -1,1 +1,53 @@
 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة المستخدم</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+<div class="container" style="padding:60px 20px">
+
+<h1>مرحبا بك</h1>
+
+<p id="userPhone"></p>
+
+<a href="properties.html" class="btn btn-primary">
+عرض العقارات
+</a>
+
+<button id="logoutBtn" class="btn btn-outline">
+تسجيل خروج
+</button>
+
+</div>
+
+<script>
+
+const phone = localStorage.getItem("userPhone");
+
+if(!phone){
+
+window.location.href="login.html";
+
+}
+
+document.getElementById("userPhone").innerText =
+"رقم الجوال: " + phone;
+
+document.getElementById("logoutBtn").onclick=function(){
+
+localStorage.removeItem("userPhone");
+
+window.location.href="login.html";
+
+}
+
+</script>
+
+</body>
+</html>
