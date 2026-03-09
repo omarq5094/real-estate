@@ -11,26 +11,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const errorMessage = document.getElementById("errorMessage");
   const searchInput = document.getElementById("searchInput");
   const categoryFilter = document.getElementById("categoryFilter");
-  const menuToggle = document.getElementById("menuToggle");
-  const mobileMenu = document.getElementById("mobileMenu");
-
-  console.log("propertiesContainer:", propertiesContainer);
-  console.log("loadingMessage:", loadingMessage);
-  console.log("errorMessage:", errorMessage);
-  console.log("searchInput:", searchInput);
-  console.log("categoryFilter:", categoryFilter);
-
-  if (menuToggle && mobileMenu) {
-    menuToggle.addEventListener("click", () => {
-      mobileMenu.classList.toggle("show");
-    });
-  }
 
   async function loadProperties() {
     try {
       const response = await fetch(SHEET_CSV_URL);
+
       if (!response.ok) {
-        throw new Error("فشل تحميل ملف CSV");
+        throw new Error("فشل تحميل البيانات");
       }
 
       const csvText = await response.text();
@@ -46,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
         loadingMessage.classList.add("hidden");
       }
     } catch (error) {
-      console.error("Load Error:", error);
+      console.error(error);
 
       if (loadingMessage) {
         loadingMessage.classList.add("hidden");
@@ -60,95 +47,58 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function parseCSV(csvText) {
     const lines = csvText.trim().split("\n");
-    const headers = splitCSVLine(lines[0]).map((header) =>
-      header.trim().replace(/^\uFEFF/, "")
-    );
+    const headers = lines[0].split(",").map((h) => h.trim());
 
     return lines.slice(1).map((line) => {
-      const values = splitCSVLine(line);
-      const rowObject = {};
+      const values = line.split(",");
+      const row = {};
 
       headers.forEach((header, index) => {
-        rowObject[header] = (values[index] || "").trim();
+        row[header] = (values[index] || "").trim();
       });
 
-      return rowObject;
+      return row;
     });
-  }
-
-  function splitCSVLine(line) {
-    const result = [];
-    let current = "";
-    let insideQuotes = false;
-
-    for (let i = 0; i < line.length; i++) {
-      const char = line[i];
-      const nextChar = line[i + 1];
-
-      if (char === '"') {
-        if (insideQuotes && nextChar === '"') {
-          current += '"';
-          i++;
-        } else {
-          insideQuotes = !insideQuotes;
-        }
-      } else if (char === "," && !insideQuotes) {
-        result.push(current);
-        current = "";
-      } else {
-        current += char;
-      }
-    }
-
-    result.push(current);
-    return result;
   }
 
   function mapRowToProperty(row) {
     return {
       id: row.id || "",
       title: row.title || "بدون عنوان",
-      category: row.category || "غير محدد",
-      city: row.city || "غير محدد",
-      district: row.district || "غير محدد",
-      area: row.area || "-",
-      length: row.length || "-",
-      width: row.width || "-",
-      price: row.price || "0",
+      category: row.category || "",
+      city: row.city || "",
+      district: row.district || "",
+      area: row.area || "",
+      length: row.length || "",
+      width: row.width || "",
+      price: row.price || "",
       price_type: row.price_type || "price",
       description: row.description || "",
-      image_url: row.image_url || "",
       is_visible: row.is_visible || "FALSE",
     };
   }
 
   function isVisible(property) {
-    return String(property.is_visible).toUpperCase() === "TRUE";
+    return String(property.is_visible).trim().toUpperCase() === "TRUE";
   }
 
   function formatPrice(property) {
-    if (String(property.price_type).toLowerCase() === "sum") {
+    if (property.price_type === "sum") {
       return "السوم";
     }
 
-    const numericPrice = Number(property.price);
-    if (!numericPrice) {
+    const price = Number(property.price);
+
+    if (!price) {
       return "غير محدد";
     }
 
-    return `${numericPrice.toLocaleString("en-US")} ريال`;
-  }
-
-  function getImageUrl(imageUrl) {
-    if (!imageUrl) {
-      return "https://picsum.photos/900/700?random=40";
-    }
-    return imageUrl;
+    return price.toLocaleString("en-US") + " ريال";
   }
 
   function getWhatsAppMessage(property) {
     return encodeURIComponent(
-      `مرحبًا، لدي اهتمام بهذا العقار:
+`مرحبًا، لدي اهتمام بهذا العقار:
 ${property.title}
 المدينة: ${property.city}
 الحي: ${property.district}
@@ -159,17 +109,9 @@ ${property.title}
   function createPropertyCard(property) {
     return `
       <article class="property-card">
-        <div class="property-image-wrap">
-          <span class="property-badge">${property.category}</span>
-          <img
-            class="property-image"
-            src="${getImageUrl(property.image_url)}"
-            alt="${property.title}"
-            onerror="this.src='https://picsum.photos/900/700?random=99'"
-          />
-        </div>
 
         <div class="property-content">
+
           <div class="property-head">
             <h3 class="property-title">${property.title}</h3>
             <div class="property-price">${formatPrice(property)}</div>
@@ -180,6 +122,7 @@ ${property.title}
           </div>
 
           <div class="property-meta">
+
             <div class="meta-box">
               <span class="meta-label">المساحة</span>
               <span class="meta-value">${property.area} م²</span>
@@ -189,11 +132,15 @@ ${property.title}
               <span class="meta-label">الأبعاد</span>
               <span class="meta-value">${property.length} × ${property.width}</span>
             </div>
+
           </div>
 
-          <p class="property-description">${property.description || "لا يوجد وصف إضافي."}</p>
+          <p class="property-description">
+            ${property.description || "لا يوجد وصف إضافي."}
+          </p>
 
           <div class="property-actions">
+
             <a
               class="btn btn-primary property-btn"
               href="https://wa.me/${WHATSAPP_NUMBER}?text=${getWhatsAppMessage(property)}"
@@ -208,15 +155,16 @@ ${property.title}
             >
               اتصال
             </a>
+
           </div>
+
         </div>
+
       </article>
     `;
   }
 
   function renderProperties(properties) {
-    if (!propertiesContainer) return;
-
     if (!properties.length) {
       propertiesContainer.innerHTML = `
         <div class="empty-box">
@@ -232,10 +180,8 @@ ${property.title}
   }
 
   function applyFilters() {
-    if (!searchInput || !categoryFilter) return;
-
-    const searchValue = searchInput.value.trim().toLowerCase();
-    const selectedCategory = categoryFilter.value.trim();
+    const searchValue = searchInput.value.toLowerCase();
+    const selectedCategory = categoryFilter.value;
 
     const filtered = allProperties.filter((property) => {
       const matchesSearch =
@@ -260,8 +206,5 @@ ${property.title}
     categoryFilter.addEventListener("change", applyFilters);
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
   loadProperties();
 });
-});
-
