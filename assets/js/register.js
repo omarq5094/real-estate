@@ -1,4 +1,5 @@
 const SCRIPT_URL = window.APP_CONFIG.SCRIPT_URL;
+
 const form = document.getElementById("registerForm");
 const msg = document.getElementById("msg");
 
@@ -19,6 +20,7 @@ if (form) {
     const formData = new URLSearchParams();
     formData.append("phone", phone);
     formData.append("password", password);
+    formData.append("action", "register");
 
     try {
       const response = await fetch(SCRIPT_URL, {
@@ -30,7 +32,6 @@ if (form) {
       });
 
       const text = await response.text();
-      console.log("Raw response:", text);
 
       let data;
       try {
@@ -47,7 +48,7 @@ if (form) {
         showMessage(data.message || "فشل التسجيل", true);
       }
     } catch (error) {
-      console.error("Fetch error:", error);
+      console.error("Register fetch error:", error);
       showMessage("تعذر الاتصال بالخدمة", true);
     }
   });
