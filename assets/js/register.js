@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxv3UZ19OA1X8PocDkQ5-HduMB6GNz9nT7fzKqDxisNdcKsXonNd60VLEZ1rA3OdQW37g/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyoG_g3ELKfAuuj1wHBGDahm0RlyD1D4mhnnqlS_0oF11CNhAMBPyzEU07Xd3iqXS3Jiw/exec";
 
 const form = document.getElementById("registerForm");
 const msg = document.getElementById("msg");
@@ -52,13 +52,4 @@ form.addEventListener("submit", async function (e) {
 
 function showMessage(message, isError = false) {
   msg.textContent = message;
-  msg.style.marginTop = "15px";
-  msg.style.padding = "12px 14px";
-  msg.style.borderRadius = "12px";
-  msg.style.fontWeight = "700";
-  msg.style.background = isError ? "rgba(255, 107, 107, 0.12)" : "rgba(37, 230, 165, 0.12)";
-  msg.style.border = isError
-    ? "1px solid rgba(255, 107, 107, 0.35)"
-    : "1px solid rgba(37, 230, 165, 0.35)";
-  msg.style.color = isError ? "#ffd6d6" : "#dffff5";
-}
+  msg.style.marginTop = "
