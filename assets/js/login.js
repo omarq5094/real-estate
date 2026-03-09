@@ -1,49 +1,70 @@
 const SCRIPT_URL = window.APP_CONFIG.SCRIPT_URL;
+
 const form = document.getElementById("loginForm");
 const msg = document.getElementById("msg");
 
-form.addEventListener("submit", async function(e){
+if (form) {
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-e.preventDefault();
+    const phone = document.getElementById("phone").value.trim();
+    const password = document.getElementById("password").value.trim();
 
-const phone=document.getElementById("phone").value.trim();
-const password=document.getElementById("password").value.trim();
+    if (!phone || !password) {
+      showMessage("يرجى إدخال رقم الجوال وكلمة المرور", true);
+      return;
+    }
 
-const data=new URLSearchParams();
+    showMessage("جاري التحقق...");
 
-data.append("phone",phone);
-data.append("password",password);
-data.append("action","login");
+    const formData = new URLSearchParams();
+    formData.append("phone", phone);
+    formData.append("password", password);
+    formData.append("action", "login");
 
-try{
+    try {
+      const response = await fetch(SCRIPT_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: formData.toString()
+      });
 
-const res=await fetch(SCRIPT_URL,{
-method:"POST",
-headers:{
-"Content-Type":"application/x-www-form-urlencoded"
-},
-body:data.toString()
-});
+      const text = await response.text();
 
-const text=await res.text();
-const result=JSON.parse(text);
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch (err) {
+        showMessage("وصل رد غير متوقع من الخدمة", true);
+        return;
+      }
 
-if(result.success){
-
-localStorage.setItem("userPhone",phone);
-
-window.location.href="dashboard.html";
-
-}else{
-
-msg.innerText="بيانات الدخول غير صحيحة";
-
+      if (data.success) {
+        localStorage.setItem("userPhone", phone);
+        window.location.href = "dashboard.html";
+      } else {
+        showMessage(data.message || "رقم الجوال أو كلمة المرور غير صحيحة", true);
+      }
+    } catch (error) {
+      console.error("Login fetch error:", error);
+      showMessage("خطأ في الاتصال", true);
+    }
+  });
 }
 
-}catch(err){
-
-msg.innerText="خطأ في الاتصال";
-
+function showMessage(message, isError = false) {
+  msg.textContent = message;
+  msg.style.marginTop = "15px";
+  msg.style.padding = "12px 14px";
+  msg.style.borderRadius = "12px";
+  msg.style.fontWeight = "700";
+  msg.style.background = isError
+    ? "rgba(255, 107, 107, 0.12)"
+    : "rgba(37, 230, 165, 0.12)";
+  msg.style.border = isError
+    ? "1px solid rgba(255, 107, 107, 0.35)"
+    : "1px solid rgba(37, 230, 165, 0.35)";
+  msg.style.color = isError ? "#ffd6d6" : "#dffff5";
 }
-
-});
