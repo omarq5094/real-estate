@@ -1,5 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwBRXleXMaOtaEsA3m9HfbX2zArAGSvsiaSSp0-1gbgOqE2hiL5_czP5RY3c9VMgOEmCw/exec";
-
+const SCRIPT_URL = window.APP_CONFIG.SCRIPT_URL;
 const form = document.getElementById("loginForm");
 const msg = document.getElementById("msg");
 
